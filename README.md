@@ -1,1 +1,1 @@
-# reinitialization
+# Reinitialization for level set function
