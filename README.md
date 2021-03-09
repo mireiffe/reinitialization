@@ -1,4 +1,4 @@
-# An implementation for a classical re-initialization method for level set function
+# A classical re-initialization method for level set function
 
 ## Overview
 This is a python implementation for a re-initialization method of sussman.
