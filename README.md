@@ -1,7 +1,7 @@
 # A classical re-initialization method for level set function
 
 ## Overview
-This is a python implementation for a re-initialization method of sussman.
+This is a (not official) python implementation for a re-initialization method of sussman.
 
 ## Referance
 
