@@ -5,4 +5,4 @@ This is a python implementation for a re-initialization method of sussman.
 
 ## Referance
 
-[A Level Set Approach for Computing Solutions to Incompressible Two-Phase Flow, Mark Sussman, Peter Smereka, Stanley Osher, Journal of Computational Physics, Volume 114, Issue 1, 1994, Pages 146-159.](<https://doi.org/10.1006/jcph.1994.1155.>)
+[A Level Set Approach for Computing Solutions to Incompressible Two-Phase Flow, Mark Sussman, Peter Smereka, Stanley Osher, Journal of Computational Physics, Volume 114, Issue 1, 1994, Pages 146-159.](<https://doi.org/10.1006/jcph.1994.1155>)
