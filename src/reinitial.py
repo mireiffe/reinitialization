@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 
 
-class reinitial():
+class Reinitial():
     def __init__(self, img:np.ndarray, dt:float=0.1, width:float=5, tol:float=1E-02, iter:int=None, dim:int=2) -> np.ndarray:
         '''
         This function make a signed distance function by doing the re-initialization.

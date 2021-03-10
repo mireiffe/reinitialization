@@ -11,7 +11,7 @@ from mpl_toolkits import mplot3d
 from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import LinearLocator
 
-from reinitial import reinitial
+from reinitial import Reinitial
 
 
 # load an image from url, that contains multiple polygons
@@ -20,7 +20,7 @@ img = np.where(np.array(img_pil)[..., 0] < 100, -1, 1)
 m, n = img.shape
 
 # make image a SDF
-ri = reinitial(img, dt=.1, width=None, tol=.001, iter=None, dim=2)
+ri = Reinitial(img, dt=.1, width=None, tol=.001, iter=None, dim=2)
 phi = ri.getSDF()
 
 # to check that norm of gradient is 1
