@@ -3,7 +3,9 @@ import cv2
 
 
 class Reinitial():
-    def __init__(self, img:np.ndarray, dt:float=0.1, width:float=5, tol:float=1E-02, iter:int=None, dim:int=2) -> np.ndarray:
+    eps = np.finfo(float).eps
+
+    def __init__(self, img:np.ndarray, dt:float=0.1, width:float=5, tol:float=1E-02, iter:int=None, dim:int=2, debug=False) -> np.ndarray:
         '''
         This function make a signed distance function by doing the re-initialization.
         Everything is based on the sussman's paper(1994), but this contains additional 3D implementation.
@@ -39,9 +41,8 @@ class Reinitial():
         self.tol = tol
         self.dim = dim
         self.iter = iter
-
+        self.debug = debug
         self.sign0 = np.sign(self.img)
-        self._sign0 = self.approx_sign(self.img)
 
     def getSDF(self):
         _k = 1
@@ -58,8 +59,10 @@ class Reinitial():
                     reg_err = np.ones_like(phi)
                 else:
                     reg_err = np.abs(phi) < self.wid
-                err = (np.abs(new_phi - phi) * reg_err).sum() / reg_err.sum()
-                if err < self.tol:
+                err = (np.abs(new_phi - phi) * reg_err).sum() / (reg_err.sum() + self.eps)
+                if self.debug:
+                    print(f"\rk = {_k}, error = {err / self.dt:.6f}", end='')
+                if err < self.tol * self.dt:
                     break
             phi = np.copy(new_phi)
         return new_phi
@@ -88,8 +91,10 @@ class Reinitial():
         elif self.dim == 3:
             Gz = np.maximum((bza * b_sgn + bzp) ** 2, (-fza * f_sgn + fzp) ** 2)
             _G = np.sqrt(Gx + Gy + Gz) - 1
-
-        _phi = phi - self.dt * self._sign0 * _G
+        
+        # for numerical stabilities, sign should be updated
+        _sign0 = self.approx_sign(phi)
+        _phi = phi - self.dt * _sign0 * _G
         return _phi
 
     @staticmethod
@@ -103,10 +108,10 @@ class Reinitial():
             elif type == 1: 2/pi * arctan(r * v), r=1000
         '''
         if type == 0:
-            eps = np.finfo(float).eps
-            return v / np.sqrt(v ** 2 + eps ** 2)
+            _eps = 1
+            return v / np.sqrt(v ** 2 + _eps ** 2)
         elif type == 1:
-            r = 1000
+            r = 100
             return 2 / np.pi * np.arctan(r * v)
 
     @staticmethod
@@ -129,10 +134,12 @@ class Reinitial():
         zy = np.zeros_like(v[0:1, :, ...])
         by = np.concatenate((zy, _d[1]), axis=0)
         fy = np.concatenate((_d[1], zy), axis=0)
-        if dim == 3:
+        if dim == 2:
+            return [bx, by], [fx, fy]
+        elif dim == 3:
             zz = np.zeros_like(v[:, :, 0:1])
             bz = np.concatenate((zz, _d[2]), axis=2)
             fz = np.concatenate((_d[2], zz), axis=2)
             return [bx, by, bz], [fx, fy, fz]
-        return [bx, by], [fx, fy]
+        
     
