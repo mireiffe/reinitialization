@@ -56,4 +56,5 @@ nga = ax[2].imshow(ng)
 fig.colorbar(nga, ax=ax[2], shrink=.7, aspect=10)
 ax[2].set_title('Norm of gradient')
 
+pass
 plt.show()
