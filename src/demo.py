@@ -12,13 +12,15 @@ from matplotlib.gridspec import GridSpec
 from matplotlib.ticker import LinearLocator
 
 from reinitial import reinitial
+
+
 # load an image from url, that contains multiple polygons
 img_pil = Image.open(requests.get("https://i.stack.imgur.com/7Qnug.jpg", stream=True).raw)
 img = np.where(np.array(img_pil)[..., 0] < 100, -1, 1)
 m, n = img.shape
 
 # make image a SDF
-ri = reinitial(img, dt=.1, width=3, tol=.001, iter=None, dim=2)
+ri = reinitial(img, dt=.1, width=None, tol=.001, iter=None, dim=2)
 phi = ri.getSDF()
 
 # to check that norm of gradient is 1
@@ -26,7 +28,9 @@ phi_x = .5 * cv2.Sobel(phi, -1, 1, 0, ksize=1, borderType=cv2.BORDER_REFLECT)
 phi_y = .5 * cv2.Sobel(phi, -1, 0, 1, ksize=1, borderType=cv2.BORDER_REFLECT)
 ng = np.sqrt(phi_x ** 2 + phi_y ** 2)
 
+# -----------------------------------------
 # visualization
+# -----------------------------------------
 fig = plt.figure()
 mng = plt.get_current_fig_manager()
 mng.window.showMaximized()
@@ -55,7 +59,6 @@ ax[2].zaxis.set_major_locator(LinearLocator(10))
 fig.colorbar(surf, ax=ax[2], shrink=.75, aspect=10)
 ax[2].set_title('3D surface of the SDF')
 
-# fig.savefig(f"{time.strftime('%H%M-%d%b-%Y', time.localtime(time.time()))}.png")
-
 plt.show()
 
+# fig.savefig(f"{time.strftime('%H%M-%d%b-%Y', time.localtime(time.time()))}.png")
