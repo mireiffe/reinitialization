@@ -20,8 +20,8 @@ img = np.where(np.array(img_pil)[..., 0] < 100, -1, 1)
 m, n = img.shape
 
 # make image a SDF
-ri = Reinitial(img, dt=.1, width=None, tol=.01, iter=None, dim=2)
-phi = ri.getSDF()
+ri = Reinitial(dt=.1, width=None, tol=.01, iter=None, dim=2)
+phi = ri.getSDF(img)
 
 # to check that norm of gradient is 1
 phi_x = .5 * cv2.Sobel(phi, -1, 1, 0, ksize=1, borderType=cv2.BORDER_REFLECT)

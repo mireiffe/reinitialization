@@ -26,8 +26,8 @@ lst_imgs = [img[m // a * i:m // a * (i + 1), n // b * j:n // b * (j + 1)]
 imgs = np.stack(lst_imgs, axis=-1)
 
 # make image a SDF
-ri = Reinitial(imgs, dt=.1, width=10, tol=.001, iter=None, dim=2)
-phis = ri.getSDF()
+ri = Reinitial(dt=.1, width=10, tol=.001, iter=None, dim=2)
+phis = ri.getSDF(imgs)
 
 # to check that norm of gradient is 1
 phis_x = .5 * cv2.Sobel(phis, -1, 1, 0, ksize=1, borderType=cv2.BORDER_REFLECT)

@@ -21,8 +21,8 @@ imgs = np.where((X - 36) ** 2 + (Y - 53) ** 2 / 2 + (Z - 7) ** 2 * 10 < 400, -1,
 m, n, c = imgs.shape
 
 # make image a SDF
-ri = Reinitial(imgs, dt=.1, width=3, tol=.01, iter=None, dim=3)
-phis = ri.getSDF()
+ri = Reinitial(dt=.1, width=3, tol=.01, iter=None, dim=3)
+phis = ri.getSDF(imgs)
 
 # -----------------------------------------
 # visualization
