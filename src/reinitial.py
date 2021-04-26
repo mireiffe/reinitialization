@@ -7,7 +7,7 @@ class Reinitial():
 
     def __init__(self, dt:float=0.1, width:float=5, tol:float=1E-02, iter:int=None, dim:int=2, debug=False) -> np.ndarray:
         '''
-        This function make a signed distance function by doing the re-initialization.
+        This function makes a signed distance function by doing the re-initialization.
         Everything is based on the sussman's paper(1994), but this contains additional 3D implementation.
         https://github.com/mireiffe/reinitialization
 
